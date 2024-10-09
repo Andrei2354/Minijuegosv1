@@ -55,25 +55,90 @@ def juego1():
     juego_root1.pack(fill="both", expand=True)
     juego_root1.create_image(0, 0, image=Imagen_juego_photo, anchor="nw")
 
-    boton_volver = ttk.Button(juego_root1, text="Volver",command=pantalla_main1)
-    boton_volver.pack(side="top", pady="20", padx="20", ipady="2", ipadx="40")
+    main2 = ttk.Frame(juego_root1)
+    main2.pack(side="top", expand=True)
 
-    boton_salir = ttk.Button(juego_root1, text="Salir",command=root.destroy)
-    boton_salir.pack(side="top", pady="20", padx="20", ipady="2", ipadx="40")
+    boton_volver = ttk.Button(main2, text="Volver",command=pantalla_main3)
+    boton_volver.pack(side="left", ipady="2", ipadx="20")
+
+    boton_salir = ttk.Button(main2, text="Salir",command=root.destroy)
+    boton_salir.pack(side="right", ipady="2",  ipadx="20")
 
 def juego2():
     global juego_root2
     canvas.destroy()
+
     juego_root2 = tk.Canvas(root, width=512, height=512)
     juego_root2.pack(fill="both", expand=True)
     juego_root2.create_image(0, 0, image=Imagen_juego_photo, anchor="nw")
 
-    boton_volver = ttk.Button(juego_root2, text="Volver",command=pantalla_main2)
-    boton_volver.pack(side="top", pady="20", padx="20", ipady="2", ipadx="40")
+    main = ttk.Frame(juego_root2)
+    main.pack(side="top", expand=True)
+    main1 = ttk.Frame(juego_root2)
+    main1.pack(side="top", expand=True)
+    main2 = ttk.Frame(juego_root2)
+    main2.pack(side="top", expand=True)
 
-    boton_salir = ttk.Button(juego_root2, text="Salir",command=root.destroy)
-    boton_salir.pack(side="top", pady="20", padx="20", ipady="2", ipadx="40")
+    label_nombre = ttk.Label(main, text="Traduce la palabra: ")
+    label_nombre.pack(side="left")
 
+    entry_str = ttk.Entry(main, width=15)
+    entry_str.pack(side="left")
+
+    boton_volver = ttk.Button(main2, text="Volver",command=pantalla_main2)
+    boton_volver.pack(side="left", ipady="2", ipadx="20")
+
+    boton_salir = ttk.Button(main2, text="Salir",command=root.destroy)
+    boton_salir.pack(side="right", ipady="2",  ipadx="20")
+
+    palabras = {
+            "stone": "piedra",
+            "fire": "fuego",
+            "body": "cuerpo",
+            "call": "llamar",
+            "clean": "limpiar",
+            "doctor": "doctor",
+            "card": "tarjeta",
+            "club": "club",
+            "dance": "bailar",
+            "dream": "soñar",
+            "black": "negro",
+            "class": "clase",
+            "child": "niño",
+            "country": "país",
+            "finish": "terminar",
+            "eat": "comer",
+            "boat": "barco",
+            "end": "fin",
+            "fast": "rápido",
+            "song": "canción"
+        }
+
+    def palabras_aleatorias():
+        return random.sample(list(palabras.items()), k=5)
+
+    def jugar():
+        aciertos = 0
+        palabras_mostradas = palabras_aleatorias()
+
+        for palabra_ing, traduccion_correcta in palabras_mostradas:
+            resultado.set(f"Traduce la palabra: {palabra_ing}")
+            respuesta = str(entry_str.get().lower())
+
+            if respuesta == traduccion_correcta:
+                resultado.set("¡Correcto!")
+                aciertos += 1
+            else:
+                resultado.set(f"Incorrecto. La respuesta correcta es: {traduccion_correcta}")
+
+        resultado.set(f"Tu puntuación final es {aciertos} de 5.")
+
+    boton_jugar = ttk.Button(main, text="Jugar", command=jugar)
+    boton_jugar.pack(side="bottom", ipady="2", ipadx="20")
+
+    resultado = tk.StringVar()
+    boton_resultado = ttk.Button(main1, textvariable=resultado)
+    boton_resultado.pack(side="bottom")
 
 def juego3():
     global juego_root3
