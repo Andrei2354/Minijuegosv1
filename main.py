@@ -42,6 +42,7 @@ def pantalla_main2():
     juego_root2.destroy()
     elige_juego()
 
+
 def pantalla_main3():
     juego_root3.destroy()
     elige_juego()
